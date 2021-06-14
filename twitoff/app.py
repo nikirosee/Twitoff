@@ -2,10 +2,8 @@
 Main app/ routing file for Twitoff
 
 The file that holds the functions create_app
-to collect our modules
+to collect our modules and organize the flask app.
 """
-
-
 
 from flask import Flask, render_template
 
@@ -17,6 +15,10 @@ def create_app():
     @app.route('/')
     def root():
         return render_template("base.html", title="Home")
+
+    @app.route('/saysomething')
+    def say_something():
+        return 'I am saying something'
 
     return app
 
