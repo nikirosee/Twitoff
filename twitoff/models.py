@@ -1,32 +1,32 @@
-"""SqLAlchemy models (schema) for twitoff"""
-
+"""SQLAlchemy models (schema) for twitoff"""
 from flask_sqlalchemy import SQLAlchemy
 
 DB = SQLAlchemy()
 
-# Creates User table
-# This is similair to `CREATE TABLE user...` in SQL
 
+# Creates User Table
+# Similar to saying `CREATE TABLE user ...` in SQL
 class User(DB.Model):
     """Twitter Users corresponding to tweets table"""
-
-    # creating id column(primay key)
+    # creating id column (primary key)
     id = DB.Column(DB.BigInteger, primary_key=True)
     name = DB.Column(DB.String, nullable=False)
+    # newest_tweet_id = DB.Column(DB.BigInteger)
 
     def __repr__(self):
         return f"<User: {self.name}>"
 
-# Creates Tweet table
-# This is similar to `CREATE TABLE tweet...` in SQL
+# Creates Tweet Table
+# Similar to saying `CREATE TABLE tweet ...` in SQL
+
 
 class Tweet(DB.Model):
     """Tweet text and data"""
     id = DB.Column(DB.BigInteger, primary_key=True)
-    text = DB.Column(DB.Unicode(300))
+    tweet = DB.Column(DB.Unicode(300))
+    vect = DB.Column(DB.PickleType, nullable=False)
     user_id = DB.Column(DB.BigInteger, DB.ForeignKey('user.id'))
-    user = DB.relationship(
-        "User", backref=DB.backref('tweets', lazy=True))
+    user = DB.relationship("User", backref=DB.backref('tweets', lazy=True))
 
     def __repr__(self):
-        return f"<User: {self.text}>"
+        return f"<Tweet: {self.text}>"
